@@ -1,0 +1,92 @@
+<div>
+    <mat-card class="titrCardDialog">
+      <h5 class="titr">
+        مدیریت نواحی 
+      </h5>
+    </mat-card>
+  </div>
+  <div>
+    <!-- <app-loading *ngIf="commonService.loading==true"></app-loading> -->
+    <br>
+    <mat-form-field class="example-container ">
+      <input matInput (keyup)="applyFilter($event)" placeholder="جستجو">
+    </mat-form-field>
+  
+  </div>
+  
+  <div class="example-container ">
+  
+    <table dir="rtl" matSort class="table table-responsive table-bordered  table-striped  table-hover" mat-table #table
+      [dataSource]="dataSource">
+  
+      <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+  
+      <!-- Position Column -->
+      <ng-container matColumnDef="number">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>ردیف </th>
+        <td mat-cell *matCellDef="let row;let index = index"> {{index+1}} </td>
+        <td mat-footer-cell *matFooterCellDef>
+          <p style=" min-width:50px;font-weight: bold;">ایجاد ناحیه جدید </p>
+        </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="zoneId"> 
+        <th mat-header-cell mat-sort-header *matHeaderCellDef> کد ناحیه</th>
+        <td style="cursor: pointer;" mat-cell *matCellDef="let element" (click)="selectRow(element)">
+          <mat-form-field *ngIf="edit" class="example-full-width" appearance="fill">
+            <input matInput *ngIf="edit" [placeholder]="" [(ngModel)]="element.zoneId" type="text">
+          </mat-form-field>
+          <p *ngIf="!edit">{{element.zoneId}}</p>
+        </td>
+        <td mat-footer-cell *matFooterCellDef>
+          <mat-form-field style="max-height: 52px;" class="example-full-width" appearance="fill">
+            <input matInput placeholder="نام چک لیست" [(ngModel)]="newRowObj.zoneId" type="text">
+          </mat-form-field>
+        </td>
+      </ng-container>
+
+  
+      <ng-container matColumnDef="namZone"> 
+        <th mat-header-cell mat-sort-header *matHeaderCellDef> نام ناحیه</th>
+        <td style="cursor: pointer;" mat-cell *matCellDef="let element" (click)="selectRow(element)">
+          <mat-form-field *ngIf="edit" class="example-full-width" appearance="fill">
+            <input matInput *ngIf="edit" [placeholder]="" [(ngModel)]="element.namZone" type="text">
+          </mat-form-field>
+          <p *ngIf="!edit">{{element.namZone}}</p>
+        </td>
+        <td mat-footer-cell *matFooterCellDef>
+          <mat-form-field style="max-height: 52px;" class="example-full-width" appearance="fill">
+            <input matInput placeholder="نام چک لیست" [(ngModel)]="newRowObj.namZone" type="text">
+          </mat-form-field>
+        </td>
+      </ng-container>
+  
+  
+  
+      <ng-container matColumnDef="process">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>عملیات </th>
+        <td mat-cell *matCellDef="let row;let index = index">
+          <i *ngIf="edit==false " class="fa fa-pencil-square-o iconEdit" (click)="editRow(row)"></i>
+          <i *ngIf="edit==true && row.editable==true" class="fa fa-check-square-o iconOk" (click)="updateRow(row)"></i>
+          <i *ngIf="edit==false " class="fa fa-trash iconDelete" (click)="deleteRow(row)"></i>
+          <!-- <i *ngIf="edit==true && row.editable==true" class="fa fa-check-square-o iconOk" (click)="updateRow(row)"></i> -->
+  
+        </td>
+        <td mat-footer-cell *matFooterCellDef="let row;let index = index">
+          <i *ngIf="edit==false " class="fa fa-plus-square iconAdd" (click)="addRow()"></i>
+        </td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns;"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      <tr style="background-color: #06acea;" mat-footer-row *matFooterRowDef="displayedColumns ; sticky: true">
+  
+      </tr>
+  
+    </table>
+  
+    <mat-paginator [pageSizeOptions]="[20,50,100]"></mat-paginator>
+  
+  </div>

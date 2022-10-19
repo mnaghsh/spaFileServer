@@ -1,0 +1,140 @@
+<div>
+  <mat-card class="titrCardDialog">
+    <h5 class="titr">
+      تعریف چک لیست و کاربرگ
+    </h5>
+  </mat-card>
+</div>
+<div>
+  <br>
+  <br>
+  <!-- <div>  <app-loading *ngIf="commonService.loading==true"></app-loading> -->
+  <!-- </div> -->
+  <br>
+  <mat-form-field class="example-container " style="width: 100%!important;">
+    <input matInput (keyup)="applyFilter($event)" placeholder="جستجو">
+  </mat-form-field>
+
+</div>
+
+<div class="example-container ">
+
+  <table matSort class="table table-responsive  table-bordered  table-striped  table-hover" mat-table #table
+    [dataSource]="dataSource">
+
+    <!--- Note that these columns can be defined in any order.
+    The actual rendered columns are set as a property on the row definition" -->
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="number">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>ردیف </th>
+      <td mat-cell *matCellDef="let row;let index = index"> {{index+1}} </td>
+      <td mat-footer-cell *matFooterCellDef>
+        <p style="min-width:60px ;font-weight: bold;">ایجاد چک لیست جدید</p>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="namChkHecli">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef> نام چک لیست</th>
+      <td style="cursor: pointer ;" mat-cell *matCellDef="let element" (click)="selectRow(element)">
+        <mat-form-field *ngIf="edit" class="example-full-width" appearance="fill">
+          <input matInput *ngIf="edit" [placeholder]="" [(ngModel)]="element.namChkHecli" type="text">
+        </mat-form-field>
+        <p *ngIf="!edit">{{element.namChkHecli}}</p>
+      </td>
+      <td mat-footer-cell *matFooterCellDef>
+        <mat-form-field style="max-height: 52px;" class="example-full-width" appearance="fill">
+          <input matInput placeholder="نام چک لیست" [(ngModel)]="newRowObj.namChkHecli" type="text">
+        </mat-form-field>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="unitCehckListsHecli">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef> واحد</th>
+      <td mat-cell *matCellDef="let element">
+        <mat-form-field *ngIf="edit" class="example-full-width" appearance="fill">
+          <mat-label>واحد</mat-label>
+          <mat-select [(ngModel)]="element.unitCehckListsHecli">
+            <mat-option *ngFor="let f of unit" [value]="f.viewValue">{{f.viewValue}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <p *ngIf="!edit">{{element.unitCehckListsHecli}}</p>
+      </td>
+      <td mat-footer-cell *matFooterCellDef>
+        <mat-form-field style="max-height: 52px;" class="example-full-width" appearance="fill">
+          <mat-label>واحد</mat-label>
+          <mat-select [(ngModel)]="newRowObj.unitCehckListsHecli">
+            <mat-option *ngFor="let f of unit" [value]="f.viewValue">{{f.viewValue}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="namDepartmentHecli">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef> ناحیه</th>
+      <td mat-cell *matCellDef="let element">
+        <mat-form-field *ngIf="edit" class="example-full-width" appearance="fill">
+          <mat-label>ناحیه</mat-label>
+          <mat-select [(ngModel)]="element.namDepartmentHecli">
+            <mat-option *ngFor="let f of department" [value]="f.viewValue">{{f.viewValue}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <p *ngIf="!edit">{{element.namDepartmentHecli}}</p>
+      </td>
+      <td mat-footer-cell *matFooterCellDef>
+        <mat-form-field style="max-height: 52px;" ass="example-full-width" appearance="fill">
+          <mat-label>ناحیه</mat-label>
+          <mat-select [(ngModel)]="newRowObj.namDepartmentHecli">
+            <mat-option *ngFor="let f of department" [value]="f.viewValue">{{f.viewValue}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="flgChkHecli">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef> چک لیست/کاربرگ    <td mat-cell *matCellDef="let element">
+        <span>
+          <section class="example-section">
+            <mat-checkbox class="example-margin" [(ngModel)]="element.flgChkHecli"> چک لیست</mat-checkbox>
+          </section>
+        </span>
+
+      </td>
+      <td mat-footer-cell *matFooterCellDef>
+        <span style="max-height: 52px;" ass="example-full-width" appearance="fill">
+          <section class="example-section">
+            <mat-checkbox class="example-margin" [(ngModel)]=" newRowObj.flgChkHecli">چک لیست</mat-checkbox>
+          </section>
+        </span>
+      </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="process">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>عملیات </th>
+      <td mat-cell *matCellDef="let row;let index = index">
+        <i *ngIf="edit==false " class="fa fa-pencil-square-o iconEdit" (click)="editRow(row)"></i>
+        <i *ngIf="edit==true && row.editable==true" class="fa fa-check-square-o iconOk" (click)="updateRow(row)"></i>
+        <i *ngIf="edit==false " class="fa fa-trash iconDelete" (click)="deleteRow(row)"></i>
+        <i *ngIf="edit==false " class="fa fa-question-circle iconQuestion"
+          (click)="addQuestions(row)"></i>
+        <i *ngIf="edit==false  && row.flgChkHecli==1" class="fa fa-check-circle iconOptions"
+          (click)="addOptions(row)"></i>
+      </td>
+      <td mat-footer-cell *matFooterCellDef="let row;let index = index">
+        <i *ngIf="edit==false " class="fa fa-plus-square iconAdd" (click)="addRow()"></i>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns;"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <tr style="background-color: #06acea30;" mat-footer-row *matFooterRowDef="displayedColumns ; sticky: true">
+
+    </tr>
+
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 100]"></mat-paginator>
+
+</div>

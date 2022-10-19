@@ -1,0 +1,150 @@
+<div>
+    <mat-card class="titrCard">
+        <h5 class="titr">
+            برنامه زمانبندی </h5>
+    </mat-card>
+</div>
+<div>
+    <div>
+        <app-loading *ngIf="commonService.loading==true"></app-loading>
+        <br>
+        <mat-form-field class="example-container ">
+            <input matInput (keyup)="applyFilter($event)" placeholder="جستجو">
+        </mat-form-field>
+
+    </div>
+
+    <div class="example-container ">
+
+        <table dir="rtl" matSort class="table table-responsive table-bordered  table-striped  table-hover" mat-table
+            #table [dataSource]="dataSource">
+
+            <!--- Note that these columns can be defined in any order.
+              The actual rendered columns are set as a property on the row definition" -->
+
+            <!-- Position Column -->
+            <ng-container matColumnDef="number">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>ردیف </th>
+                <td mat-cell *matCellDef="let row;let index = index"> {{index+1}} </td>
+                <td mat-footer-cell *matFooterCellDef>
+                    <p style="font-weight: bold;"> ایجاد زمانبندی جدید </p>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="namAssessorHsrch">
+                <th mat-header-cell mat-sort-header *matHeaderCellDef>  نام ارزیاب</th>
+                <td mat-cell *matCellDef="let element">
+                    <mat-form-field *ngIf="edit" class="example-full-width" appearance="fill">
+                        <input (click)="selectAssessor()" matInput *ngIf="edit" [placeholder]="" [(ngModel)]="element.namAssessorHsrch" type="text">
+                    </mat-form-field>
+                    <p *ngIf="!edit">{{element.namAssessorHsrch}}</p>
+                </td>
+                <td mat-footer-cell *matFooterCellDef>
+                    <mat-form-field style="max-height: 52px;" class="example-full-width" appearance="fill">
+                        <input (click)="selectAssessor()" placeholder="نام ارزیاب" matInput  [(ngModel)]="newRowObj.namAssessorHsrch" type="text">
+                    </mat-form-field>
+                </td>
+            </ng-container>
+
+
+            <ng-container matColumnDef="namChkHecli">
+                <th mat-header-cell mat-sort-header *matHeaderCellDef> نام چک لیست</th>
+                <td mat-cell *matCellDef="let element">
+                    <mat-form-field *ngIf="edit" class="example-full-width" appearance="fill">
+                        <input (click)="selectCheckList()" matInput *ngIf="edit" [placeholder]="" [(ngModel)]="element.namChkHecli" type="text">
+                    </mat-form-field>
+                    <p *ngIf="!edit">{{element.namChkHecli}}</p>
+                </td>
+                <td mat-footer-cell *matFooterCellDef>
+                    <mat-form-field style="max-height: 52px;" class="example-full-width" appearance="fill">
+                        <input matInput placeholder="نام چک لیست"  (click)="selectCheckList()"  [(ngModel)]="newRowObj.namChkHecli" type="text">
+                    </mat-form-field>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="numNumberHsrch">
+                <th mat-header-cell mat-sort-header *matHeaderCellDef> تعداد </th>
+                <td mat-cell *matCellDef="let element">
+                    <mat-form-field *ngIf="edit" class="example-full-width" appearance="fill">
+                        <input   matInput *ngIf="edit" [placeholder]="" [(ngModel)]="element.numNumberHsrch" type="text">
+                    </mat-form-field>
+                    <p *ngIf="!edit">{{element.numNumberHsrch}}</p>
+                </td>
+                <td mat-footer-cell *matFooterCellDef>
+                    <mat-form-field style="max-height: 52px;" class="example-full-width" appearance="fill">
+                        <input type="number" matInput placeholder="تعداد"   [(ngModel)]="newRowObj.numNumberHsrch" type="text">
+                    </mat-form-field>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="namPeriodHsrch">
+                <th mat-header-cell mat-sort-header *matHeaderCellDef> زمانبندی</th>
+                <!-- <td mat-cell *matCellDef="let element">
+                    <mat-form-field *ngIf="edit" class="example-full-width" appearance="fill">
+                        <input matInput *ngIf="edit" [placeholder]="" [(ngModel)]="element.datSchedulingHscls" type="text">
+                    </mat-form-field>
+                    <p *ngIf="!edit">{{element.datSchedulingHscls}}</p>
+                </td> -->
+
+
+
+                <td mat-cell *matCellDef="let element">
+                    <mat-form-field *ngIf="edit" class="example-full-width" appearance="fill">
+                      <mat-label>زمانبندی</mat-label>
+                      <mat-select [(ngModel)]="element.namPeriodHsrch">
+                        <mat-option *ngFor="let f of unit" [value]="f.viewValue">{{f.viewValue}}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                    <p *ngIf="!edit">{{element.namPeriodHsrch}}</p>
+                  </td>
+
+   
+                <td mat-footer-cell *matFooterCellDef>
+                    <mat-form-field style="max-height: 52px;" class="example-full-width" appearance="fill">
+                      <mat-label>زمانبندی</mat-label>
+                      <mat-select [(ngModel)]="newRowObj.namPeriodHsrch">
+                        <mat-option *ngFor="let f of unit" [value]="f.viewValue">{{f.viewValue}}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </td>
+
+            </ng-container>
+            <ng-container matColumnDef="namLocationHsrch">
+                <th mat-header-cell mat-sort-header *matHeaderCellDef> نام مکان</th>
+                <td mat-cell *matCellDef="let element">
+                    <mat-form-field *ngIf="edit" class="example-full-width" appearance="fill">
+                        <input (click)="selectLocations()"  matInput *ngIf="edit" [placeholder]="" [(ngModel)]="element.namLocationHsrch" type="text">
+                    </mat-form-field>
+                    <p *ngIf="!edit">{{element.namLocationHsrch}}</p>
+                </td>
+                <td mat-footer-cell *matFooterCellDef>
+                    <mat-form-field style="max-height: 52px;" class="example-full-width" appearance="fill">
+                        <input  (click)="selectLocations()" matInput placeholder="نام مکان" [(ngModel)]="newRowObj.namLocationHsrch" type="text">
+                    </mat-form-field>
+                </td>
+            </ng-container>
+          
+            <ng-container matColumnDef="process">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>عملیات </th>
+                <td mat-cell *matCellDef="let row;let index = index">
+                    <!-- <i *ngIf="edit==false " class="fa fa-pencil-square-o iconEdit" (click)="editRow(row)"></i>
+                    <i *ngIf="edit==true && row.editable==true" class="fa fa-check-square-o iconOk"
+                        (click)="updateRow(row)"></i> -->
+                    <i *ngIf="edit==false " class="fa fa-trash iconDelete" (click)="deleteRow(row)"></i>
+                </td>
+                <td mat-footer-cell *matFooterCellDef="let row;let index = index">
+                    <i *ngIf="edit==false " class="fa fa-plus-square iconAdd" (click)="addRow()"></i>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns;"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            <tr style="background-color: #06acea30;" mat-footer-row *matFooterRowDef="displayedColumns ; sticky: true">
+
+            </tr>
+
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[5, 100]"></mat-paginator>
+
+    </div>

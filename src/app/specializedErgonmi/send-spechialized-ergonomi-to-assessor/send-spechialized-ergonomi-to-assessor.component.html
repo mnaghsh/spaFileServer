@@ -1,0 +1,25 @@
+<div>
+    <mat-card class="titrCardDialog">
+        <h5 class="titr">
+            ارسال برای ارگونومی تخصصی
+        </h5>
+    </mat-card>
+</div>
+<app-loading *ngIf="commonService.loading==true"></app-loading>
+
+<mat-card style="text-align: center;">
+    <mat-form-field appearance="fill">
+        <mat-label> انتخاب ارزیاب ارگونومی تخصصی</mat-label>
+        <input [(ngModel)]="spechializedAssessor" (click)="selectAssessor()" matInput required>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label> متن پیامک </mat-label>
+        <textarea matInput [(ngModel)]="textOfMessage" cdkTextareaAutosize #autosize="cdkTextareaAutosize"
+            cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"></textarea>
+    </mat-form-field>
+    <br>
+    <button mat-raised-button class="btnExcel" (click)="saveAndSendMessage()">
+        <i class="fa fa-telegram" aria-hidden="true"></i> ارسال پیامک
+    </button>
+
+</mat-card>

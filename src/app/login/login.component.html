@@ -1,0 +1,156 @@
+
+  <h1  style="text-align: center;font-weight: bold; padding-top: 2%; margin-left: 50%; color: #06acea;" class="titrLogin">
+    سامانه ایمنی و بهداشت مجتمع فولاد مبارکه اصفهان
+  </h1>
+
+<table>
+  <tr>
+    <td class="loginImage" > <img src="../assets/login-v2.da80012f.svg">
+    </td>
+    <td style="padding-left:150px; padding-top: 200px;">
+     
+     
+      
+        <form [formGroup]="loginForm" (ngSubmit)="login()" class="center" (keydown)="keyDownFunction($event)">
+          <!-- <img class="logoHse full-width"   src="../assets/hseIcon.png"> -->
+      
+      
+      
+          <mat-form-field class="full-width">
+            <input matInput type="text" placeholder="نام کاربری" formControlName="username" />
+          </mat-form-field>
+          <br>
+          <mat-form-field class="full-width">
+            <input matInput type="password" placeholder="رمز عبور" formControlName="password" />
+          </mat-form-field>
+          <br>
+      
+          <!-- <mat-progress-bar class="full-width"  *ngIf="commonService.loading==true" mode="indeterminate"></mat-progress-bar> -->
+      
+       
+          <br>
+          <button style="color: white; background-color: #06acea; border-radius: 10px;" *ngIf="connectToServer" mat-raised-button type="submit">
+            <!-- <i class="fa fa-key fa-spin 1a-3x fa-fw" style="padding: 2px;" aria-hidden="true"></i> ورود</button> <mat-spinner [diameter]="20"    *ngIf="commonService.loading==true"  style="   position: absolute; margin-right: 48%;" ></mat-spinner>  -->
+            <i class="fa fa-key " style="padding: 2px; cursor: pointer;" aria-hidden="true"></i> ورود
+          </button>
+      
+      
+          <br>
+          <button disabled *ngIf="!connectToServer" mat-raised-button type="submit" color="primary">
+            <!-- <i class="fa fa-key fa-spin 1a-3x fa-fw" style="padding: 2px;" aria-hidden="true"></i> ورود</button> <mat-spinner [diameter]="20"    *ngIf="commonService.loading==true"  style="   position: absolute; margin-right: 48%;" ></mat-spinner>  -->
+            <i class="fa fa-key " style="padding: 2px;" aria-hidden="true"></i> ورود
+          </button>
+      
+      
+          <br>    <br>    <br>    <br>   
+      
+          <mat-spinner  class="about" [diameter]="30" *ngIf="commonService.loading==true" >
+          </mat-spinner>
+      
+          <!-- <mat-progress-bar *ngIf="commonService.loading==true" mode="indeterminate"></mat-progress-bar> -->
+        </form>
+        <!-- <mat-card-footer *ngIf="message != null ">
+          <p class="error">
+            {{message}}
+          </p>
+        </mat-card-footer> -->
+        <mat-card-actions style="text-align: center;">
+          
+        <!-- <img class="iconFolad"  src="../assets/foolad.svg"> -->
+        <!-- <img class="logoIrisa "   src="../assets/IrisaPlus.svg"> -->
+        <br>
+            
+                <!-- <p class="about">تمامی حقوق این سامانه برای شرکت فولاد مبارکه اصفهان محفوظ است</p> -->
+                 
+                <!-- <a  target="_blank" href="https://www.linkedin.com/in/mohammad-naghsh-40aa0360"> 
+                  <h5 class="about">Mohammad Naghsh</h5> </a>
+                  <h6 class="about"> &nbsp; By &nbsp;</h6>
+                  <i style="color: purple !important;" class="fa fa-heart" aria-hidden="true"></i>
+        
+                  <h6 class="about" >&nbsp; Made With&nbsp;</h6> -->
+      
+        </mat-card-actions>
+      
+
+    </td>
+  </tr>
+</table>
+<!-- <div style="  height: 89.9%; background-image: url('../assets/blackboard.jpg');"> -->
+  <!-- <div style="  height: 89.9%; background-image: url('../assets/login-v2.da80012f.svg');"> -->
+ <!-- <img class="" src="../assets/login-v2.da80012f.svg"> -->
+
+
+<!-- <img class="image" src="./assets/index.jpg" width="60px"> -->
+<!-- 
+<mat-card class="titrCard">
+  <h2 style="text-align: center;font-weight: bold;" class="titrLogin">
+    سامانه ایمنی و بهداشت مجتمع فولاد مبارکه اصفهان
+  </h2>
+</mat-card>
+<div style="  height: 89.9%; background-image: url('../assets/blackboard.jpg');">
+<mat-card class="card">
+  <mat-card-header>
+
+  </mat-card-header>
+
+  <form [formGroup]="loginForm" (ngSubmit)="login()" class="center" (keydown)="keyDownFunction($event)">
+    <img class="logoHse full-width"   src="../assets/hseIcon.png">
+
+
+
+    <mat-form-field class="full-width">
+      <input matInput type="text" placeholder="نام کاربری" formControlName="username" />
+    </mat-form-field>
+    <br>
+    <mat-form-field class="full-width">
+      <input matInput type="password" placeholder="رمز عبور" formControlName="password" />
+    </mat-form-field>
+    <br>
+
+    <br>
+    <button style="color: white; background-color: #00338f; border-radius: 10px;" *ngIf="connectToServer" mat-raised-button type="submit">
+      <i class="fa fa-key " style="padding: 2px; cursor: pointer;" aria-hidden="true"></i> ورود
+    </button>
+
+
+    <br>
+    <button disabled *ngIf="!connectToServer" mat-raised-button type="submit" color="primary">
+      <i class="fa fa-key " style="padding: 2px;" aria-hidden="true"></i> ورود
+    </button>
+
+
+
+
+    <mat-spinner  class="about" [diameter]="30" *ngIf="commonService.loading==true" >
+    </mat-spinner>
+
+  </form>
+
+  <mat-card-actions style="text-align: center;">
+  
+
+  
+  
+  <img class="iconFolad"  src="../assets/foolad.svg">
+  <img class="logoIrisa "   src="../assets/IrisaPlus.svg">
+
+
+  <br>
+
+     
+    
+          <p class="about">تمامی حقوق این سامانه برای شرکت فولاد مبارکه اصفهان محفوظ است</p>
+      
+     
+       
+
+
+  </mat-card-actions>
+</mat-card>
+
+<router-outlet></router-outlet>
+
+
+ -->
+
+<router-outlet></router-outlet>

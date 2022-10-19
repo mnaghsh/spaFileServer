@@ -1,0 +1,110 @@
+<div>
+    <mat-card class="titrCardDialog">
+        <h5 class="titr">
+            گزارش چک لیست ها
+        </h5>
+    </mat-card>
+</div>
+<app-loading *ngIf="commonService.loading==true"></app-loading>
+<mat-form-field style="min-width: 100%;" class="example-container">
+    <input matInput (keyup)="applyFilter($event)" placeholder=" جستجو در چک لیست های فیلتر شده">
+</mat-form-field>
+<button mat-raised-button class="btnExcel" (click)="commonService.exportTable()">
+    <i class="fa fa-file-excel-o" aria-hidden="true"></i> انتقال به اکسل
+</button>
+<button mat-raised-button color="accent" (click)="commonService.print()">
+    <i class="fa fa-print" aria-hidden="true"></i> چاپ
+</button>
+<div id="print-section" class="example-container">
+
+    <table id="mainTable" dir="rtl" matSort class="table table-responsive table-bordered  table-striped  table-hover"
+        mat-table #table [dataSource]="dataSource">
+
+        <!--- Note that these columns can be defined in any order.
+The actual rendered columns are set as a property on the row definition" -->
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="number">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>ردیف </th>
+            <td mat-cell *matCellDef="let row;let index = index"> {{index+1}} </td>
+            <td style="padding: 10px;" mat-footer-cell *matFooterCellDef>
+                <!-- <p style="color: red;">درصدها</p> -->
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="namChkHecli">
+            <th mat-header-cell mat-sort-header *matHeaderCellDef> نام چک لیست</th>
+            <td mat-cell *matCellDef="let element">
+                <p>{{element.namChkHecli}}</p>
+            </td>
+            <td mat-footer-cell *matFooterCellDef>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="namAssessorHsrch">
+            <th mat-header-cell mat-sort-header *matHeaderCellDef>نام ارزیاب</th>
+            <td mat-cell *matCellDef="let element">
+                <p>{{element.namAssessorHsrch}}</p>
+            </td>
+            <td mat-footer-cell *matFooterCellDef>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="requestDateHsrch">
+            <th mat-header-cell mat-sort-header *matHeaderCellDef> تاریخ ارزیابی</th>
+            <td mat-cell *matCellDef="let element">
+                <p>{{element.requestDateHsrch}}</p>
+            </td>
+            <td mat-footer-cell *matFooterCellDef>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="namLocationHsrch">
+            <th mat-header-cell mat-sort-header *matHeaderCellDef> مکان ارزیابی شده </th>
+            <td mat-cell *matCellDef="let element">
+                <p>{{element.namLocationHsrch}}</p>
+            </td>
+            <td mat-footer-cell *matFooterCellDef>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="namEvaluationAreaHsrch">
+            <th mat-header-cell mat-sort-header *matHeaderCellDef> ناحیه ی مکان</th>
+            <td mat-cell *matCellDef="let element">
+                <p>{{element.namEvaluationAreaHsrch}}</p>
+            </td>
+            <td mat-footer-cell *matFooterCellDef>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="process">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>عملیات </th>
+            <td mat-cell *matCellDef="let row;let index = index">
+
+                <!-- <button mat-raised-button color="primary" (click)="sendForSpecializedErgonomics()"> -->
+                    <i (click)="sendForSpecializedErgonomics()"
+                    matTooltip="ارسال برای ارگونومی تخصصی"
+                    style=" padding: 5px; color:green; cursor: pointer;" class="fa fa-telegram" aria-hidden="true"></i> 
+               
+                    <!-- </button> -->
+
+
+
+            </td>
+            <td mat-footer-cell *matFooterCellDef="let row;let index = index">
+                <!-- <i *ngIf="edit==false " class="fa fa-plus-square iconAdd" (click)="addRow()"></i> -->
+            </td>
+        </ng-container>
+
+
+
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr (click)="selectAssesment(row)" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr style="background-color: #06acea30;" mat-footer-row *matFooterRowDef="displayedColumns ; sticky: true">
+
+            <!-- </tr> -->
+
+    </table>
+</div>
+<mat-paginator [pageSizeOptions]="[1000,50, 100]"></mat-paginator>

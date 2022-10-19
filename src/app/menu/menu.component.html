@@ -1,0 +1,62 @@
+
+
+<nav mat-tab-nav-bar class="nav">
+  <div mat-tab-link class="flex-fill" *ngFor="let link of navBarItem" [routerLink]="link.path" routerLinkActive
+    #rla="routerLinkActive" [active]="rla.isActive">
+    <div class="menu-item">
+      <i [class]="link.icon" style="font-size: x-large; text-align: center;" aria-hidden="true"></i>
+      <div class="menu-label">{{link.label}}</div>
+    </div>
+  </div>
+</nav>
+
+
+<mat-sidenav-container class="dom" autosize hasBackdrop="true">
+  <mat-sidenav position="start" #drawer mode="over">
+    <mat-list role="side">
+      <mat-list-item class="userInfoBox">
+
+      </mat-list-item>
+
+      <div>
+
+        <mat-list-item (click)="drawer.toggle()" role="listitem" *ngFor="let link of [{}]" [routerLink]="link.path">
+          <i class="fa fa-user-circle" style=" color: white; font-size: 200%;" aria-hidden="true"
+            (click)="drawer.toggle()"></i>
+
+          <!-- <label style="font-weight: bold!important;"
+            class="label">{{this.commonService.activeUser.firstname}}&nbsp;{{this.commonService.activeUser.lastname}}</label> -->
+          <mat-divider>
+          </mat-divider>
+        </mat-list-item>
+
+        <mat-list-item (click)="drawer.toggle()" role="listitem" *ngFor="let link of navBarItem"
+        [routerLink]="link.path">
+        <i [class]="link.icon" style="font-size: large;" class="menuIcons" aria-hidden="true"></i>
+
+        <span class="label">{{link.label}}</span>
+        <mat-divider>
+        </mat-divider>
+      </mat-list-item>
+
+
+        <mat-list-item (click)="drawer.toggle()" role="listitem" *ngFor="let link of rightMenu"
+          [routerLink]="link.path">
+          <i [class]="link.icon" style="font-size: large;" class="menuIcons" aria-hidden="true"></i>
+
+          <span class="label">{{link.label}}</span>
+          <mat-divider>
+          </mat-divider>
+        </mat-list-item>
+      </div>
+
+    </mat-list>
+
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <i class="fa fa-align-justify rightMenuIcon " aria-hidden="true" (click)="drawer.toggle()"></i>
+    <router-outlet></router-outlet>
+    <!-- <app-upload (onUploadFinished)="uploadFinished($event)"></app-upload> -->
+
+  </mat-sidenav-content>
+</mat-sidenav-container>

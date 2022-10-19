@@ -1,0 +1,55 @@
+.example-stepper {
+    margin-top: 8px;
+  }
+  
+  .mat-form-field {
+    margin-top: 16px;
+  }
+
+  .example-container mat-form-field {
+ 
+    min-width: 100%;
+    }
+    .example-container  {
+      padding: 1%;
+      
+      }
+  
+ 
+  .example-radio-group {
+    display: flex;
+    flex-direction: column;
+    margin: 15px 0;
+    display:inline-block;margin-right:10px;
+  }
+  
+  .example-radio-button {
+    margin: 5px;
+  }
+ 
+  .example-container table{
+    /*width: 100%;*/
+    text-align: center !important;
+  }
+  th.mat-header-cell {
+    text-align: right;
+  }
+  .lastRow{
+    visibility: hidden;
+  }
+  .addBtn{
+    color: green!important;
+    cursor: pointer;
+  }
+  .cancel{
+    color: red!important;
+    cursor: pointer;
+    }
+  .iconQuestion{
+    color: rgb(30, 18, 136);
+    padding: 5px;
+  }
+  .iconOptions{
+    color: rgb(48, 214, 62);
+    padding: 5px;
+  }

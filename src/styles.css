@@ -1,0 +1,149 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+* {
+    font-family: 'iranSans'!important; 
+    text-align: right;
+  }
+
+  @font-face {
+    font-family: iranSans;
+    src: url(assets/Fonts/iranSans/IRANSansRegular.ttf) format("opentype");
+  }
+
+.fa {
+  font-family: FontAwesome !important;
+}
+.mat-tab-nav-bar{
+  width: 100%;
+}
+.mat-tab-links{
+  width: 100%;
+  cursor: pointer;
+}
+.btnAdd{
+  margin-right: 1%!important;
+}
+.content{
+  margin: 1%!important;
+  margin-bottom: 4%!important;
+}
+/*.mat-raised-button{
+  background-color: #06acea !important;
+}*/
+.titrCard{
+
+  background-color: #06acea;
+  /*background-image: linear-gradient(#2684ff, #0049b0);
+  background: linear-gradient(to right, #2684ff, #0049b0); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+  color:white;
+  width: 100%;
+  /*position: fixed !important ;*/
+
+}
+
+.titrCardDialog{
+
+  background-color: #06acea;
+  color:white;
+  width: 100%;
+
+}
+ .titr{
+  width: 100%;
+  overflow-y: hidden;
+  font-size: large !important;
+  font-weight: bold  !important;
+  padding-right: 10%
+ }
+ 
+
+ 
+
+.mat-sidenav-content{
+  padding-bottom: 8%;
+}
+.spinner{
+  position: absolute!important;
+  min-width: 100%!important;
+  min-height: 100%!important;
+  background-color: rgba(0, 0, 0, 0.0)!important;
+
+}
+/* td{
+  cursor: pointer!important;
+} */
+.btnPrint{
+  background-color: #cd0a0a!important;
+   margin-right: 1%!important;
+   float:right;font-weight:bold!important;
+/*position: fixed!important;*/
+   z-index: 1000;
+   padding-right: 2%!important;
+   padding-left: 2%!important;
+}
+.btnSave{
+  margin-right: 1%!important;
+   background-color:#335d2d!important;
+   color: white;
+
+   }
+   .btnROllBack{
+    background-color:#cd0a0a!important;
+    margin-right: 2px!important;
+    color: white;
+   }
+   .btnAdd{
+    background-color:#335d2d!important;
+    color: white;
+
+   }
+  
+
+button{
+  border-radius: 7px !important;
+  margin: 5px!important;
+}
+.iconEdit{
+  color:  #f514db;
+  padding: 5px;
+  
+}
+.iconDelete{
+  color: red;
+  padding: 5px;
+}
+
+.iconOk{
+  color: green;
+  padding: 5px;
+}
+.iconAdd{
+  color: green;
+  padding: 5px;
+}
+
+i{
+  cursor: pointer;
+  font-size: 18px !important;
+  padding-left: 10%!important;
+}
+
+.example-container{
+  overflow-x: auto
+}
+.btnExcel{
+  background-color: green !important;
+  color: white !important;
+}
+th{
+  font-size: 15px!important;
+  font-weight:bolder !important;
+ padding-right: 2px!important;
+
+}
+input{
+  cursor: pointer;
+}

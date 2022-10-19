@@ -1,0 +1,209 @@
+<div>
+    <mat-card class="titrCardDialog">
+        <h5 class="titr">
+            گزارش چک لیست ها
+        </h5>
+    </mat-card>
+</div>
+<div>
+    <mat-card>
+        <mat-form-field class="example-container">
+            <input matInput [(ngModel)]="namChkHecliFilter" placeholder="فیلتر نام چک لیست">
+        </mat-form-field>
+
+        <!-- <mat-form-field class="example-container">
+            <input matInput [(ngModel)]="namDepartmentHecliFilter" placeholder=" فیلتر نام ناحیه">
+        </mat-form-field> -->
+
+        <mat-form-field class="example-container">
+            <input matInput [(ngModel)]="namAssessorHsrchFilter" placeholder=" فیلتر نام ارزیاب">
+        </mat-form-field>
+
+        <mat-form-field class="example-container">
+            <input matInput [(ngModel)]="namLocationHsrchFilter" placeholder=" فیلتر نام مکان">
+        </mat-form-field>
+
+        <mat-form-field class="example-container">
+            <input matInput [(ngModel)]="desQuestionHeclqFilter" placeholder="فیلتر شرح سوال">
+        </mat-form-field>
+
+        <mat-form-field class="example-container">
+            <input matInput [(ngModel)]="desOptionHecloFilter" placeholder="فیلتر شرح گزینه">
+        </mat-form-field>
+        <!-- این قسمت برای ارگونومی کاربردی ندارد -->
+
+        <mat-form-field class="example-container">
+            <input matInput [(ngModel)]="namEvaluationAreaHsrch" placeholder="ناحیه مکان ارزیابی شده">
+        </mat-form-field>
+
+        <mat-form-field style="overflow-x: hidden;" class="example-container">
+            <input placeholder="از تاریخ" matInput type="text" #startDate />
+            <ng-persian-datepicker [timeEnable]="false" [uiTheme]="'blue'" [dateFormat]="'jYYYY-jMM-jDD'"
+                [input]="startDate">
+            </ng-persian-datepicker>
+        </mat-form-field>
+
+        <mat-form-field style="overflow-x: hidden;" class="example-container">
+            <input placeholder="تا تاریخ" matInput type="text" #endDate />
+            <ng-persian-datepicker [timeEnable]="false" [uiTheme]="'blue'" [dateFormat]="'jYYYY-jMM-jDD'"
+                [input]="endDate">
+            </ng-persian-datepicker>
+        </mat-form-field>
+        <br>
+        <button mat-raised-button color="warn" (click)="serverFilter()">
+            <i class="fa fa-filter" aria-hidden="true"></i> اعمال فیلتر
+        </button>
+        <button mat-raised-button color="primary" (click)="getChecklistQuestions()">
+            <i class="fa fa-times" aria-hidden="true"></i> لغو فیلتر
+        </button>
+        <button mat-raised-button class="btnExcel" (click)="commonService.exportTable()">
+            <i class="fa fa-file-excel-o" aria-hidden="true"></i> انتقال به اکسل
+        </button>
+        <button mat-raised-button color="accent" (click)="commonService.print()">
+            <i class="fa fa-print" aria-hidden="true"></i> چاپ
+        </button>
+    </mat-card>
+</div>
+<app-loadingDialog *ngIf="commonService.loading==true && recievedData.itsPopup==true "></app-loadingDialog>
+<app-loading *ngIf="commonService.loading==true && recievedData.itsPopup!=true "></app-loading>
+<mat-form-field style="min-width: 100%;" class="example-container">
+    <input matInput [(ngModel)]="search" (keyup)="applyFilter($event)" placeholder=" جستجو در چک لیست های فیلتر شده">
+</mat-form-field>
+<div id="print-section" class="example-container">
+    <mat-card *ngIf="counts&&percentage" style=" background-color: aliceblue;">
+        <p> <i class="fa fa-bullseye" aria-hidden="true"></i> مجموع گزینه ها : {{counts}} </p>
+        <p> <i class="fa fa-percent" aria-hidden="true"></i>
+            درصد ها : {{percentage}}</p>
+    </mat-card>
+    <table id="mainTable" dir="rtl" matSort class="table table-responsive table-bordered  table-striped  table-hover"
+        mat-table #table [dataSource]="dataSource">
+
+        <!--- Note that these columns can be defined in any order.
+       The actual rendered columns are set as a property on the row definition" -->
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="number">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>ردیف </th>
+            <td mat-cell *matCellDef="let row;let index = index"> {{index+1}} </td>
+            <td style="padding: 10px;" mat-footer-cell *matFooterCellDef>
+                <!-- <p style="color: red;">درصدها</p> -->
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="namChkHecli">
+            <th mat-header-cell mat-sort-header *matHeaderCellDef> نام چک لیست</th>
+            <td mat-cell *matCellDef="let element">
+                <p>{{element.namChkHecli}}</p>
+            </td>
+            <td mat-footer-cell *matFooterCellDef>
+                <p></p>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="requestDescriptionHsrch">
+            <th mat-header-cell mat-sort-header *matHeaderCellDef>توضیحات کلی</th>
+            <td mat-cell *matCellDef="let element">
+                <p>{{element.requestDescriptionHsrch}}</p>
+            </td>
+            <td mat-footer-cell *matFooterCellDef>
+                <!-- <p style="color: red;">مجموع گزینه ها</p> -->
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="desQuestionHeclq">
+            <th mat-header-cell mat-sort-header *matHeaderCellDef> شرح سوال</th>
+            <td mat-cell *matCellDef="let element">
+                <p>{{element.desQuestionHeclq}}</p>
+            </td>
+            <td mat-footer-cell *matFooterCellDef>
+                <p></p>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="desOptionHeclo">
+            <th mat-header-cell mat-sort-header *matHeaderCellDef> پاسخ </th>
+            <td mat-cell *matCellDef="let element">
+                <p>{{element.desOptionHeclo}}</p>
+            </td>
+            <td mat-footer-cell *matFooterCellDef>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="desExplainQuestionHscha">
+            <th mat-header-cell mat-sort-header *matHeaderCellDef> توضیح اضافه</th>
+            <td mat-cell *matCellDef="let element">
+                <p>{{element.desExplainQuestionHscha}}</p>
+            </td>
+            <td mat-footer-cell *matFooterCellDef>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="requestDateJalaliHsrch">
+            <th mat-header-cell mat-sort-header *matHeaderCellDef> زمان تکمیل شدن چک لیست</th>
+            <td mat-cell *matCellDef="let element">
+                <p>{{element.requestDateJalaliHsrch}}</p>
+            </td>
+            <td mat-footer-cell *matFooterCellDef>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="namAssessorHsrch">
+            <th mat-header-cell mat-sort-header *matHeaderCellDef> نام ارزیاب </th>
+            <td mat-cell *matCellDef="let element">
+                <p>{{element.namAssessorHsrch}}</p>
+            </td>
+            <td mat-footer-cell *matFooterCellDef>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="namLocationHsrch">
+            <th mat-header-cell mat-sort-header *matHeaderCellDef> مکان ارزیابی شده </th>
+            <td mat-cell *matCellDef="let element">
+                <p>{{element.namLocationHsrch}}</p>
+            </td>
+            <td mat-footer-cell *matFooterCellDef>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="unitCehckListsHecli">
+            <th mat-header-cell mat-sort-header *matHeaderCellDef> واحد صاحب چک لیست </th>
+            <td mat-cell *matCellDef="let element">
+                <p>{{element.unitCehckListsHecli}}</p>
+            </td>
+            <td mat-footer-cell *matFooterCellDef>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="namEvaluationAreaHsrch">
+            <th mat-header-cell mat-sort-header *matHeaderCellDef> ناحیه مکان ارزیابی شده </th>
+            <td mat-cell *matCellDef="let element">
+                <p>{{element.namEvaluationAreaHsrch}}</p>
+            </td>
+            <td mat-footer-cell *matFooterCellDef>
+            </td>
+        </ng-container>
+
+        <!-- <ng-container matColumnDef="namDepartmentHecli">
+            <th mat-header-cell mat-sort-header *matHeaderCellDef>ناحیه </th>
+            <td mat-cell *matCellDef="let element">
+                <p>{{element.namDepartmentHecli}}</p>
+            </td>
+            <td mat-footer-cell *matFooterCellDef>
+            </td>
+        </ng-container> -->
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr style="background-color: #06acea30;" mat-footer-row *matFooterRowDef="displayedColumns ; sticky: true">
+
+            <!-- </tr> -->
+
+    </table>
+</div>
+
+
+<br>
+
+
+
+<mat-paginator [pageSizeOptions]="[100000,10000]"></mat-paginator>

@@ -1,0 +1,160 @@
+<div>
+    <mat-card class="titrCard">
+        <h5 class="titr">
+            گزارش مغایرت ارزیابی های انجام شده بر اساس مکان </h5>
+    </mat-card>
+</div>
+<div>
+    <div>
+        <app-loading *ngIf="commonService.loading==true"></app-loading>
+        <br>
+
+    </div>
+    <mat-card>
+        <mat-form-field appearance="fill">
+            <mat-label>بازه</mat-label>
+            <mat-select [(ngModel)]="selectedPeriod">
+                <div *ngIf="selectedPeriod!=4">
+                    <mat-option (click)="getAllSchedules()" *ngFor="let f of period" [value]="f.value">{{f.viewValue}}
+                    </mat-option>
+                </div>
+                <div *ngIf="selectedPeriod==4">
+                    <mat-option *ngFor="let f of period" [value]="f.value">{{f.viewValue}}
+                    </mat-option>
+                </div>
+            </mat-select>
+
+        </mat-form-field>
+        <br>
+        <div>
+            <mat-form-field *ngIf="selectedPeriod==4">
+                <input placeholder="از تاریخ" matInput type="text" #startDate />
+                <ng-persian-datepicker [timeEnable]="false" [uiTheme]="'blue'" [dateFormat]="'jYYYY-jMM-jDD'"
+                    [input]="startDate">
+                </ng-persian-datepicker>
+            </mat-form-field>
+            &nbsp;
+            <mat-form-field *ngIf="selectedPeriod==4">
+                <input placeholder="تا تاریخ" matInput type="text" #endDate />
+                <ng-persian-datepicker [timeEnable]="false" [uiTheme]="'blue'" [dateFormat]="'jYYYY-jMM-jDD'"
+                    [input]="endDate">
+                </ng-persian-datepicker>
+            </mat-form-field>
+            <BR>
+            <button *ngIf="selectedPeriod==4" mat-raised-button color="accent" (click)="getAllSchedules()">
+                <i class="fa fa-filter" aria-hidden="true"></i> اعمال فیلتر
+            </button>
+        </div>
+
+    </mat-card>
+
+
+    <mat-form-field class="example-container ">
+        <input matInput (keyup)="applyFilter($event)" placeholder="جستجو">
+    </mat-form-field>
+    <div class="example-container ">
+        <button mat-raised-button class="btnExcel" (click)="commonService.exportTable()">
+            <i class="fa fa-file-excel-o" aria-hidden="true"></i> انتقال به اکسل
+        </button>
+        <button mat-raised-button color="accent" (click)="commonService.print()">
+            <i class="fa fa-print" aria-hidden="true"></i> چاپ
+        </button>
+        <div id="print-section">
+            <table id="mainTable" dir="rtl" matSort
+                class="table table-responsive table-bordered  table-striped  table-hover" mat-table #table
+                [dataSource]="dataSource">
+
+                <!--- Note that these columns can be defined in any order.
+              The actual rendered columns are set as a property on the row definition" -->
+
+                <!-- Position Column -->
+                <ng-container matColumnDef="number">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>ردیف </th>
+                    <td mat-cell *matCellDef="let row;let index = index"> {{index+1}} </td>
+                    <td mat-footer-cell *matFooterCellDef>
+                        <p style="font-weight: bold;"> ایجاد زمانبندی جدید </p>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="NAM_LOCATION_HSRCH">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef> نام مکان</th>
+                    <td mat-cell *matCellDef="let element">
+                        <mat-form-field *ngIf="edit" class="example-full-width" appearance="fill">
+                            <input (click)="selectAssessor()" matInput *ngIf="edit" [placeholder]=""
+                                [(ngModel)]="element.NAM_LOCATION_HSRCH" type="text">
+                        </mat-form-field>
+                        <p *ngIf="!edit">{{element.NAM_LOCATION_HSRCH}}</p>
+                    </td>
+                    <td mat-footer-cell *matFooterCellDef>
+                        <mat-form-field style="max-height: 52px;" class="example-full-width" appearance="fill">
+                            <input placeholder="نام ارزیاب" matInput [(ngModel)]="newRowObj.NAM_LOCATION_HSRCH"
+                                type="text">
+                        </mat-form-field>
+                    </td>
+                </ng-container>
+
+
+                <ng-container matColumnDef="PreviouslyEvaluated">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef> تعداد چک لیست های ارزیابی شده</th>
+                    <td mat-cell *matCellDef="let element">
+                        <mat-form-field *ngIf="edit" class="example-full-width" appearance="fill">
+                            <input matInput *ngIf="edit" [placeholder]="" [(ngModel)]="element.PreviouslyEvaluated"
+                                type="text">
+                        </mat-form-field>
+                        <p *ngIf="!edit">{{element.PreviouslyEvaluated}}</p>
+                    </td>
+                    <td mat-footer-cell *matFooterCellDef>
+                        <mat-form-field style="max-height: 52px;" class="example-full-width" appearance="fill">
+                            <input matInput placeholder="نام چک لیست" [(ngModel)]="newRowObj.PreviouslyEvaluated"
+                                type="text">
+                        </mat-form-field>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="NumberOfDuties">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef> تعداد چک لیست های برنامه ریزی شده </th>
+                    <td mat-cell *matCellDef="let element">
+                        <mat-form-field *ngIf="edit" class="example-full-width" appearance="fill">
+                            <input matInput *ngIf="edit" [placeholder]="" [(ngModel)]="element.NumberOfDuties"
+                                type="text">
+                        </mat-form-field>
+                        <p *ngIf="!edit">{{element.NumberOfDuties}}</p>
+                    </td>
+                    <td mat-footer-cell *matFooterCellDef>
+                        <mat-form-field style="max-height: 52px;" class="example-full-width" appearance="fill">
+                            <input type="number" matInput placeholder="تعداد" [(ngModel)]="newRowObj.NumberOfDuties"
+                                type="text">
+                        </mat-form-field>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="NAM_PERIOD_HSRCH">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef> بازه </th>
+                    <td mat-cell *matCellDef="let element">
+                        <mat-form-field *ngIf="edit" class="example-full-width" appearance="fill">
+                            <input matInput *ngIf="edit" [placeholder]="" [(ngModel)]="element.NAM_PERIOD_HSRCH"
+                                type="text">
+                        </mat-form-field>
+                        <p *ngIf="!edit">{{element.NAM_PERIOD_HSRCH}}</p>
+                    </td>
+                    <td mat-footer-cell *matFooterCellDef>
+                        <mat-form-field style="max-height: 52px;" class="example-full-width" appearance="fill">
+                            <input type="number" matInput placeholder="تعداد" [(ngModel)]="newRowObj.NAM_PERIOD_HSRCH"
+                                type="text">
+                        </mat-form-field>
+                    </td>
+                </ng-container>
+
+
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns;"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                <!-- <tr style="background-color: #06acea30;" mat-footer-row *matFooterRowDef="displayedColumns ; sticky: true">
+
+            </tr> -->
+
+            </table>
+        </div>
+        <mat-paginator [pageSizeOptions]="[5, 100]"></mat-paginator>
+
+    </div>
