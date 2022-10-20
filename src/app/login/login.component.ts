@@ -42,6 +42,8 @@ export class LoginComponent implements OnInit {
   }
 
   public login() {
+    this.commonService.userId=981105;
+
     debugger
     this.auth.wasLoggedIn();
     this.myRoute.navigate(['menu'])

@@ -39,35 +39,22 @@ import { TypesOfFoodComponent } from './food-inspection/types-of-food/types-of-f
 import { FoodInspectionComponent } from './food-inspection/food-inspection/food-inspection.component';
 import { JalaliPipe } from 'src/pipes/jalali.pipe';
 import { UploadComponent } from './upload/upload.component';
+import { DownloadFileComponent } from './downloadFile/downloadFile.component';
+import { DownloadComponent } from './download/download.component';
 
 
 
 const myRoots: Routes = [
   { path: 'login', component: LoginComponent },
-  { path: 'fileUpload', component: UploadComponent },
+
   {
     canActivate: [LoginGuard],
     path: '', component: MenuComponent,
     children: [
       { path: 'home', component: HomeComponent },
       { path: 'menu', component: MenuComponent },
-      { path: 'createCheckList', component: CreateCheckListComponent },
-      { path: 'questions', component: ChecklistQuestionsComponent },
-      { path: 'checklistAssesment', component: ChecklistAssesmentComponent },
-      { path: 'locations', component: LocationsComponent },
-      { path: 'zones', component: ZonesComponent },
-      { path: 'checklistReport', component: ChecklistReportComponent },
-      { path: 'users', component: UsersComponent },
-      { path: 'messages', component: MessagesComponent },
-      { path: 'scheduling', component: SchedulingComponent },
-      { path: 'requestChecklistReport', component: RequestChecklistReportComponent},
-      { path: 'evaluationDiscrepanciesReportByAssessor', component: EvaluationDiscrepanciesReportByAssessorComponent },
-      { path: 'evaluationDiscrepanciesReportByLocation', component: EvaluationDiscrepanciesReportByLocationComponent },
-      { path: 'evaluationDiscrepanciesReportByCheckList', component: EvaluationDiscrepanciesReportByCheckListComponent },
-      { path: 'workbookReport', component: WorkbookReportComponent },
-      { path: 'typesOfFood', component: TypesOfFoodComponent },
-      { path: 'foodManufactures', component: foodManufacturesComponent },
-      { path: 'foodInspection', component: FoodInspectionComponent },
+      { path: 'fileUpload', component: UploadComponent },
+      { path: 'download', component: DownloadComponent },
     ]
   }
 
@@ -76,6 +63,8 @@ const myRoots: Routes = [
 
 @NgModule({
   declarations: [
+    DownloadComponent,
+    DownloadFileComponent,
     UploadComponent,
     LoadingComponent,
     LoadingDialogComponent,

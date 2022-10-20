@@ -8,6 +8,22 @@ import { Subject } from 'rxjs';
 })
 
 export class CommonService {
+  //          .mat-sort-header-button{
+  //            border-bottom: 1px solid gray;
+  //            font-size: medium;
+  //            background-color: white;
+  //            border: 0px solid gray;
+  //            text-align: center;
+  //          }
+  //        //........Customized style.......
+  //        </style>
+  //       </head>
+  //   <body onload="window.print();window.close()">${printContents}</body>
+  //     </html>`
+  //   );
+  //   popupWin.document.close();
+  // }
+ 
   teachers: any[];
   @Output() saveTotalMainGrid = new EventEmitter();
 
@@ -37,6 +53,7 @@ export class CommonService {
   repeatGetChecklist: boolean;
   fullName="محمد نقش"
   selectedZoneObj: any;
+  userId: any;
   constructor(private snackBar: MatSnackBar,) { }
   showEventMessage(message, duration = 3000, type?) {
 

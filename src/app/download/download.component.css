@@ -1,0 +1,39 @@
+.example-container mat-form-field {
+ 
+  min-width: 100%;
+  }
+  .example-container  {
+    padding: 1%;
+    }
+
+table {
+  width: 100%!important;
+}
+
+
+.example-container table{
+  width: 100%;
+  text-align: center !important;
+}
+th.mat-header-cell {
+  text-align: right;
+}
+.lastRow{
+  visibility: hidden;
+}
+.addBtn{
+  color: green!important;
+  cursor: pointer;
+}
+.cancel{
+  color: red!important;
+  cursor: pointer;
+  }
+.iconQuestion{
+  color: rgb(30, 18, 136);
+  padding: 5px;
+}
+.iconOptions{
+  color: rgb(48, 214, 62);
+    padding: 5px;
+}

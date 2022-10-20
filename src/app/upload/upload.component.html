@@ -1,22 +1,25 @@
 <div>
   <mat-card class="titrCard">
     <h5 class="titr">
-      انجام ارزیابی </h5>
+      لیست قایل های آپلود شده   
+    </h5>
   </mat-card>
 </div>
 <div>
   <br>
   <br>
 
-
+<app-download></app-download>
   <!-- <app-loading *ngIf="commonService.loading==true"></app-loading> -->
-<br>
-<br>
-<br>
-<br>
+  <br>
 
+  <br>
+  <section class="example-section">
+    <mat-checkbox class="example-margin" [(ngModel)]="myMscSend">ارسال به فولاد من</mat-checkbox>
+    <mat-checkbox class="example-margin" [(ngModel)]="mailSend">ارسال به ایمیل</mat-checkbox>
+  </section>
 
-<div class="row" style="margin-bottom:15px;">
+  <div class="row" style="margin-bottom:15px;">
     <div class="col-md-3">
       <input type="file" #file placeholder="Choose file" (change)="uploadFile(file.files)" style="display:none;">
       <button type="button" class="btn btn-success" (click)="file.click()">Upload File</button>

@@ -7,6 +7,8 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
   styleUrls: ['./upload.component.css']
 })
 export class UploadComponent implements OnInit {
+  myMscSend = false
+  mailSend = false
   progress: number;
   message: string;
   @Output() public onUploadFinished = new EventEmitter();
@@ -25,8 +27,12 @@ export class UploadComponent implements OnInit {
     debugger
     const formData = new FormData();
     fileToUpload['userId']=981105
+    fileToUpload['myMscSend']=this.myMscSend
+    fileToUpload['mailSend']=this.mailSend
     formData.append('file', fileToUpload, fileToUpload.name);
     formData.append('file', fileToUpload, fileToUpload['userId']);
+    formData.append('file', fileToUpload, fileToUpload['myMscSend']);
+    formData.append('file', fileToUpload, fileToUpload['mailSend']);
     //formData.append('userId',"981105");
     
 
