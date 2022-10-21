@@ -8,6 +8,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { CommonService } from 'src/app/services/common.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DownloadService } from '../services/download/download.service';
+import { stringify } from 'querystring';
 
 
 
@@ -29,6 +30,7 @@ export class DownloadComponent implements OnInit {
   unit: { value: number; viewValue: string; }[];
   department: { value: number; viewValue: string; }[];
   displayedColumns: string[];
+  listOfFiles: any;
 
   constructor(
 
@@ -42,7 +44,7 @@ export class DownloadComponent implements OnInit {
   ) {
     this.getList();
     this.fillDropDowns();
-    this.commonService.loading=false;
+    this.commonService.loading = false;
 
 
   }
@@ -76,18 +78,27 @@ export class DownloadComponent implements OnInit {
   }
   ngOnInit() {
     this.newRowObj = {}
-   
-      this.displayedColumns = ['number', 'namChkHecli', 'unitCehckListsHecli','process'];
-    
+
+    this.displayedColumns = ['number', 'name', 'size', 'process'];
+
   }
 
   public getList() {
     this.commonService.loading = true;
     this.downloadService.getListOfFilesWithUserId(this.commonService.userId).subscribe((success) => {
       this.ListOfFiles = success
-        this.commonService.loading = false;
-      console.log('ListOfFiles', this.ListOfFiles.files)
-      this.dataSource = new MatTableDataSource(this.ListOfFiles.files);
+      this.commonService.loading = false;
+      console.log('ListOfFiles', this.ListOfFiles)
+
+      // this.listOfFiles =  this.ListOfFiles.map((value, index) => {
+      //   return {
+      //     id: index + 1,
+      //     name: value
+      //   };
+      // })
+
+      //console.log('this.listOfFiles3', this.listOfFiles);
+      this.dataSource = new MatTableDataSource(this.ListOfFiles);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
       this.commonService.repeatGetChecklist = false
@@ -95,6 +106,32 @@ export class DownloadComponent implements OnInit {
     });
 
   }
+  downloadFile(row) {
+this.downloadService.downloadFileWithUserIdAndFilename(row.name, this.commonService.userId.toString()).subscribe(success => {
+  debugger;
+  const a = document.createElement('a')
+  const objectUrl = URL.createObjectURL(success)
+  a.href = objectUrl
+  a.download = row.name;
+  a.click();
+  URL.revokeObjectURL(objectUrl);
+  this.commonService.loading = false
+},(blob)=>{
+  debugger;
+  const a = document.createElement('a')
+  const objectUrl = URL.createObjectURL(blob)
+  a.href = objectUrl
+  a.download = row.name;
+  a.click();
+  URL.revokeObjectURL(objectUrl);
+  this.commonService.loading = false
+}
+
+)
+  }
+
+
+
 
   public addRow() {
 
@@ -102,7 +139,7 @@ export class DownloadComponent implements OnInit {
       "namChkHecli": this.newRowObj.namChkHecli,
       "unitCehckListsHecli": this.newRowObj.unitCehckListsHecli,
       "namDepartmentHecli": this.newRowObj.namDepartmentHecli,
-      "flgChkHecli":Number(this.newRowObj.flgChkHecli),
+      "flgChkHecli": Number(this.newRowObj.flgChkHecli),
       "createDate": new Date()
     }
 
@@ -126,11 +163,11 @@ export class DownloadComponent implements OnInit {
   }
 
   public updateRow(row) {
-    if(row.flgChkHecli==false){
-      row.flgChkHecli=0
+    if (row.flgChkHecli == false) {
+      row.flgChkHecli = 0
     }
-    if(row.flgChkHecli==true){
-      row.flgChkHecli=1
+    if (row.flgChkHecli == true) {
+      row.flgChkHecli = 1
     }
     this.edit = !this.edit;
     this.downloadService.getListOfFilesWithUserId(row['eCheckListId']).subscribe((success) => {
@@ -148,9 +185,9 @@ export class DownloadComponent implements OnInit {
   }
 
   public deleteRow(row) {
-
+debugger
     console.log('del', row)
-    this.downloadService.getListOfFilesWithUserId(row['eCheckListId']).subscribe(
+    this.downloadService.deleteFileWithUserIdAndFilename(row.name, this.commonService.userId.toString()).subscribe(
       (success) => {
 
         this.getList();

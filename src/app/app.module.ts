@@ -39,7 +39,6 @@ import { TypesOfFoodComponent } from './food-inspection/types-of-food/types-of-f
 import { FoodInspectionComponent } from './food-inspection/food-inspection/food-inspection.component';
 import { JalaliPipe } from 'src/pipes/jalali.pipe';
 import { UploadComponent } from './upload/upload.component';
-import { DownloadFileComponent } from './downloadFile/downloadFile.component';
 import { DownloadComponent } from './download/download.component';
 
 
@@ -64,7 +63,6 @@ const myRoots: Routes = [
 @NgModule({
   declarations: [
     DownloadComponent,
-    DownloadFileComponent,
     UploadComponent,
     LoadingComponent,
     LoadingDialogComponent,

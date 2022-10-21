@@ -1,35 +1,53 @@
-<div>
-  <mat-card class="titrCard">
-    <h5 class="titr">
-      لیست قایل های آپلود شده   
-    </h5>
-  </mat-card>
-</div>
-<div>
-  <br>
-  <br>
+<table >
+  <tr >
+    <td>
+      <mat-checkbox class="example-margin" [(ngModel)]="myMscSend">ارسال به فولاد من</mat-checkbox>
+    </td>
+&nbsp;&nbsp;
 
-<app-download></app-download>
-  <!-- <app-loading *ngIf="commonService.loading==true"></app-loading> -->
-  <br>
+    <td >
+      <mat-checkbox  class="example-margin" [(ngModel)]="mailSend">ارسال به ایمیل</mat-checkbox>
+    </td>
 
-  <br>
-  <section class="example-section">
-    <mat-checkbox class="example-margin" [(ngModel)]="myMscSend">ارسال به فولاد من</mat-checkbox>
-    <mat-checkbox class="example-margin" [(ngModel)]="mailSend">ارسال به ایمیل</mat-checkbox>
-  </section>
+    <td>
+      
+        
+          <input type="file" #file placeholder="Choose file" (change)="uploadFile(file.files)" style="display:none;">
+          <button type="button" class="btn btn-success" (click)="file.click()">بارگزاری فایل</button>
+        
+      
+    </td>
 
-  <div class="row" style="margin-bottom:15px;">
-    <div class="col-md-3">
-      <input type="file" #file placeholder="Choose file" (change)="uploadFile(file.files)" style="display:none;">
-      <button type="button" class="btn btn-success" (click)="file.click()">Upload File</button>
-    </div>
-    <div class="col-md-4">
+    <td>
       <span class="upload" *ngIf="progress > 0">
         {{progress}}%
       </span>
+    </td>
+
+    <td>
       <span class="upload" *ngIf="message">
         {{message}}
       </span>
-    </div>
+    </td>
+
+  </tr>
+</table>
+<section class="example-section">
+  <!-- <mat-checkbox class="example-margin" [(ngModel)]="myMscSend">ارسال به فولاد من</mat-checkbox>
+  <mat-checkbox class="example-margin" [(ngModel)]="mailSend">ارسال به ایمیل</mat-checkbox> -->
+</section>
+
+<!-- <div class="row" style="margin-bottom:15px;">
+  <div class="col-md-3">
+    <input type="file" #file placeholder="Choose file" (change)="uploadFile(file.files)" style="display:none;">
+    <button type="button" class="btn btn-success" (click)="file.click()">Upload File</button>
   </div>
+  <div class="col-md-4">
+    <span class="upload" *ngIf="progress > 0">
+      {{progress}}%
+    </span>
+    <span class="upload" *ngIf="message">
+      {{message}}
+    </span>
+  </div>
+</div> -->

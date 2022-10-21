@@ -29,7 +29,7 @@ export class MenuComponent implements OnInit {
     //this.myRoute.navigate(['fileUpload']);
     this.navBarItem = [
       // { label: ' صفحه اصلی', path: "/home", icon: "fa fa-home" },
-      { label: 'آپلود و دانلود فایل', path: "/fileUpload", icon: "fa fa-pencil" },
+      { label: 'آپلود و دانلود فایل', path: "/download", icon: "fa fa-pencil" },
       //{ label: 'دانلود فایل ', path: "/checklistAssesment", icon: "fa fa-print" },
       // { label: 'چاپ گزارش', path: "/checklistReport", icon: "fa fa-newspaper-o" },
       // { label: 'برنامه زمانبندی', path: "/scheduling", icon: "fa fa-calendar" },

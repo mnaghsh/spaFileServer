@@ -37,3 +37,7 @@ th.mat-header-cell {
   color: rgb(48, 214, 62);
     padding: 5px;
 }
+.fileName{
+padding-bottom: 5px;
+color: blue;
+}

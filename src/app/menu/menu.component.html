@@ -1,4 +1,5 @@
 
+ 
 
 <nav mat-tab-nav-bar class="nav">
   <div mat-tab-link class="flex-fill" *ngFor="let link of navBarItem" [routerLink]="link.path" routerLinkActive
@@ -31,13 +32,13 @@
         </mat-list-item>
 
         <mat-list-item (click)="drawer.toggle()" role="listitem" *ngFor="let link of navBarItem"
-        [routerLink]="link.path">
-        <i [class]="link.icon" style="font-size: large;" class="menuIcons" aria-hidden="true"></i>
+          [routerLink]="link.path">
+          <i [class]="link.icon" style="font-size: large;" class="menuIcons" aria-hidden="true"></i>
 
-        <span class="label">{{link.label}}</span>
-        <mat-divider>
-        </mat-divider>
-      </mat-list-item>
+          <span class="label">{{link.label}}</span>
+          <mat-divider>
+          </mat-divider>
+        </mat-list-item>
 
 
         <mat-list-item (click)="drawer.toggle()" role="listitem" *ngFor="let link of rightMenu"
@@ -54,8 +55,15 @@
 
   </mat-sidenav>
   <mat-sidenav-content>
+
+  
     <i class="fa fa-align-justify rightMenuIcon " aria-hidden="true" (click)="drawer.toggle()"></i>
     <router-outlet></router-outlet>
+
+
+
+
+
     <!-- <app-upload (onUploadFinished)="uploadFinished($event)"></app-upload> -->
 
   </mat-sidenav-content>

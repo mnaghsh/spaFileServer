@@ -44,9 +44,9 @@ export class LoginComponent implements OnInit {
   public login() {
     this.commonService.userId=981105;
 
-    debugger
+    
     this.auth.wasLoggedIn();
-    this.myRoute.navigate(['menu'])
+    this.myRoute.navigate(['download'])
     if (this.loginForm.valid) {
       let body = {
         userName: this.loginForm.value.username,
