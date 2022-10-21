@@ -43,8 +43,8 @@ export class DownloadComponent implements OnInit {
 
   ) {
     this.getList();
-    this.fillDropDowns();
-    this.commonService.loading = false;
+    //this.fillDropDowns();
+  //  this.commonService.loading = false;
 
 
   }
@@ -77,6 +77,7 @@ export class DownloadComponent implements OnInit {
     ];
   }
   ngOnInit() {
+
     this.newRowObj = {}
 
     this.displayedColumns = ['number', 'name', 'size', 'process'];
@@ -87,17 +88,9 @@ export class DownloadComponent implements OnInit {
     this.commonService.loading = true;
     this.downloadService.getListOfFilesWithUserId(this.commonService.userId).subscribe((success) => {
       this.ListOfFiles = success
-      this.commonService.loading = false;
+     this.commonService.loading = false;
       console.log('ListOfFiles', this.ListOfFiles)
 
-      // this.listOfFiles =  this.ListOfFiles.map((value, index) => {
-      //   return {
-      //     id: index + 1,
-      //     name: value
-      //   };
-      // })
-
-      //console.log('this.listOfFiles3', this.listOfFiles);
       this.dataSource = new MatTableDataSource(this.ListOfFiles);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;

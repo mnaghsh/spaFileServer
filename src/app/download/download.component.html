@@ -9,6 +9,8 @@
   <div>
     <!-- <div>  <app-loading *ngIf="commonService.loading==true"></app-loading> -->
     <!-- </div> -->
+    <app-loading *ngIf="commonService.loading==true"></app-loading>
+    
     <br>
     <mat-form-field class="example-container " style="width: 100%!important;">
       <input matInput (keyup)="applyFilter($event)" placeholder="جستجو">
@@ -50,7 +52,7 @@
 
       <ng-container matColumnDef="name">
         <th mat-header-cell mat-sort-header *matHeaderCellDef> نام فایل</th>
-        <td  (click)="downloadFile(element)" mat-cell *matCellDef="let element">
+        <td (click)="downloadFile(element)" mat-cell *matCellDef="let element">
           <mat-form-field *ngIf="edit" class="example-full-width" appearance="fill">
             <mat-label>واحد</mat-label>
             <mat-select [(ngModel)]="element.name">
@@ -109,7 +111,8 @@
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns;"></tr>
-      <tr (click)="downloadFile(row)" style="cursor: pointer;" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      <tr (click)="downloadFile(row)" style="cursor: pointer;" mat-row *matRowDef="let row; columns: displayedColumns;">
+      </tr>
       <tr style="background-color: #06acea30;" mat-footer-row *matFooterRowDef="displayedColumns ; sticky: true">
 
       </tr>
@@ -119,4 +122,3 @@
     <mat-paginator [pageSizeOptions]="[5, 100]"></mat-paginator>
 
   </div>
-  
